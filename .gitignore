@@ -1,0 +1,10 @@
+*.bak
+.ipynb_checkpoints
+git_tutorial
+*.zip
+*.py[co]
+*.gz
+*.tgz
+package-lock.json
+cache
+__pycache__

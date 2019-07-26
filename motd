@@ -1,0 +1,4 @@
+tjena!
+
+docker build --rm -f "docker\Dockerfile" -t playground:latest docker
+docker run --interactive --tty playground bash
