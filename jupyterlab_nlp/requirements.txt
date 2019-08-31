@@ -1,46 +1,44 @@
-decorator
-cytoolz
-humanfriendly
-numpy
-pandas
-pipenv
-pylint
-requests
-scikit-learn==0.20.3
-tornado
-traitlets==4.3.2
-typing
-urllib3
-
-# jupyterlab
-jupyterlab==1.0.2
-ipywidgets==7.5.0
-py4j
-beakerx==1.4.1
-jupytext==1.2.1
-
-# Visualization
-bokeh
-community
-matplotlib
-networkx==2.3
-pydotplus
-wordcloud==1.5.0
-
-# Scraping
-lxml
-Scrapy
-beautifulsoup4==4.8.0
-
-# NLP related stuff
-
+#
+cython==0.29.13
+cytoolz==0.10.0
+decorator==4.4.0
+scikit-learn==0.20.4
+scipy==1.3.1
+spacy==2.1.8
+textacy==0.8.0
 gensim
 nltk
-spacy==2.1.6
-textacy==0.8.0
-#en-core-web-sm = {file="https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.1.0/en_core_web_sm-2.1.0.tar.gz"}
-#en-core-web-lg = {file="https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-2.1.0/en_core_web_lg-2.1.0.tar.gz"}
+
+bokeh
+matplotlib
+wordcloud
 scattertext
 
-# statistcs
+jupyterlab
+ipywidgets
+beakerx
+sql-magic
+
+community
+networkx==2.3
+pydotplus
+python_louvain
+
+pandas
+
+humanfriendly
+traitlets
+typing
+py4j
+
+lxml
+Scrapy
+beautifulsoup4
+openpyxl
+
 statsmodels
+
+pipenv
+pylint
+pipreqs
+jupytext

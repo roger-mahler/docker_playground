@@ -64,27 +64,36 @@ RUN chmod +x /usr/local/bin/tini
 
 # STEP: install global Python packages
 COPY requirements.txt .
-RUN python --version && pip install --upgrade pip && pip install -r requirements.txt \
-    \
-    && python -m nltk.downloader -d /usr/local/share/nltk_data stopwords punkt sentiwordnet \
-    && python -m spacy download en_core_web_sm \
-    && python -m spacy download en_core_web_md \
-    && python -m spacy download fr_core_news_sm
+RUN python --version \
+    && pip install --upgrade pip \
+    && pip install -r requirements.txt \
+    && exit 0
 
-RUN beakerx install \
-    && jupyter labextension install \
+RUN python -m nltk.downloader -d /usr/local/share/nltk_data stopwords punkt sentiwordnet \
+    \
+    && python -m spacy download en_core_web_sm \
+    && python -m spacy download fr_core_news_sm \
+    && python -m spacy download en_core_web_md \
+    && exit 0
+
+RUN jupyter labextension install \
          @jupyter-widgets/jupyterlab-manager \
          jupyter-matplotlib \
          jupyterlab-jupytext \
          jupyterlab_bokeh \
-         beakerx-jupyterlab \
-         @jupyterlab/toc \
-    \
-    && jupyter nbextension enable --py widgetsnbextension \
-    \
-    && npm install -g ijavascript itypescript --unsafe-perm \
-    && ijsinstall --install=global \
-    && its --install=global
+         @jupyterlab/toc
+
+    #      \
+    # \
+    # && jupyter nbextension enable --py widgetsnbextension
+cd
+# RUN beakerx install \
+#     && jupyter labextension install \
+#          beakerx-jupyterlab \
+#     \
+#     && npm install -g ijavascript itypescript --unsafe-perm \
+#     && ijsinstall --install=global \
+#     && its --install=global
 
 ENV NLTK_DATA=/usr/local/share/nltk_data
 ENV HOME=/home/$PUSER
@@ -97,9 +106,6 @@ RUN chmod 0555 /tmp/*.sh \
     && cp /tmp/start-jupyterlab.sh /usr/local/bin/
 
 COPY motd /etc/motd
-# jupyter labextension install @jupyterlab/git
-# pip install --upgrade jupyterlab-git
-# jupyter serverextension enable --py jupyterlab_git
 
 # $ pip install ipysheet
 # $ jupyter labextension install @jupyter-widgets/jupyterlab-manager
@@ -110,7 +116,8 @@ USER $PUSER
 WORKDIR $HOME
 
 RUN jupyter lab --generate-config \
-    && /tmp/setup-jupyterlab.sh
+    && /tmp/setup-jupyterlab.sh \
+    && cp -f /tmp/jupyter_notebook_config.py ~/.jupyter/jupyter_notebook_config.py
 
 # RUN pipenv install --python=three --skip-lock
 
