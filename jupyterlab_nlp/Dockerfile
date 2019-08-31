@@ -59,16 +59,17 @@ RUN npm install npm@latest -g \
 
 # STEP: Add tini init (see https://github.com/krallin/tini) and entrypoint
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/local/bin/tini
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/tini \
-    \
-    && chmod +x /usr/local/bin/docker-entrypoint.sh
+
+RUN chmod +x /usr/local/bin/tini
 
 # STEP: install global Python packages
 COPY requirements.txt .
-RUN python --version && pip install -r requirements.txt \
+RUN python --version && pip install --upgrade pip && pip install -r requirements.txt \
     \
-    && python -m nltk.downloader -d /usr/local/share/nltk_data stopwords punkt sentiwordnet
+    && python -m nltk.downloader -d /usr/local/share/nltk_data stopwords punkt sentiwordnet \
+    && python -m spacy download en_core_web_sm \
+    && python -m spacy download en_core_web_md \
+    && python -m spacy download fr_core_news_sm
 
 RUN beakerx install \
     && jupyter labextension install \
@@ -88,11 +89,12 @@ RUN beakerx install \
 ENV NLTK_DATA=/usr/local/share/nltk_data
 ENV HOME=/home/$PUSER
 
-COPY scripts/* /tmp/
+COPY scripts /tmp/
 
-RUN chmod +x /tmp/setup-user.sh /tmp/setup-lab.sh /tmp/fix-it.sh
-RUN /tmp/setup-user.sh
-RUN /tmp/fix-it.sh
+RUN chmod 0555 /tmp/*.sh \
+    && /tmp/setup-user.sh \
+    && /tmp/fix-it.sh \
+    && cp /tmp/start-jupyterlab.sh /usr/local/bin/
 
 COPY motd /etc/motd
 # jupyter labextension install @jupyterlab/git
@@ -108,17 +110,17 @@ USER $PUSER
 WORKDIR $HOME
 
 RUN jupyter lab --generate-config \
-    && /tmp/setup-lab.sh \
-    && touch /home/humlab/work/HELLO
+    && /tmp/setup-jupyterlab.sh
 
 # RUN pipenv install --python=three --skip-lock
 
 EXPOSE ${LAB_PORT}
 
-# # docker run -p 8888:8888 -v ~/notebooks:/home/humlab jupyter/minimal-notebook
-# #  Setting to an empty string disables authentication altogether, which is NOT RECOMMENDEDc.NotebookApp.token = ''
+# # docker run -rm -p 8888:8888 -v ~/notebooks:/home/humlab jupyter_nlp
+# #  Setting to an empty string disables authentication altogether, which is NOT RECOMMENDED c.NotebookApp.token = ''
 
-#ENTRYPOINT ["/usr/local/bin/tini", "--", "/usr/local/bin/docker-entrypoint.sh" ]
+RUN mkdir ~/notebooks
 
 ENTRYPOINT ["tini", "-g", "--"]
-CMD ["docker-entrypoint.sh"]
+
+CMD ["start-jupyterlab.sh"]

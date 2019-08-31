@@ -2,12 +2,12 @@
 
 Build Docker image:
 ```bash
-docker build --rm -f "docker\Dockerfile" -t playground:latest
+docker build --rm -f "jupyterlab_nlp\Dockerfile" -t jupyterlab_playground:latest
 ```
 
 Start Docker container:
 ```bash
-docker run -it --rm -p 8888:8888 -p 4040:4040 playground
+docker run -it --rm -p 8888:8888 -p 4040:4040 jupyterlab_playground
 ```
 
 Open shell to running container

@@ -38,8 +38,8 @@ gensim
 nltk
 spacy==2.1.6
 textacy==0.8.0
-en-core-web-sm = {file = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.1.0/en_core_web_sm-2.1.0.tar.gz"}
-en-core-web-lg = {file = "https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-2.1.0/en_core_web_lg-2.1.0.tar.gz"}
+#en-core-web-sm = {file="https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.1.0/en_core_web_sm-2.1.0.tar.gz"}
+#en-core-web-lg = {file="https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-2.1.0/en_core_web_lg-2.1.0.tar.gz"}
 scattertext
 
 # statistcs

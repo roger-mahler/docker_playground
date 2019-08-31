@@ -2,10 +2,11 @@ version: '3.2'
 services:
   notebook:
     build:
-      context: .
-    image: jupyter_playground
+      context: jupyterlab_nlp
+      dockerfile: jupyterlab_nlp/Dockerfile
+    image: jupyterlab_nlp
     env_file: '.env'
-    container_name: jupyter_playground
+    container_name: jupyterlab_nlp
     expose:
       - "8888"
     ports:
@@ -13,7 +14,7 @@ services:
     volumes:
       - type: bind
         source: .
-        target: /home/humlab/work
+        target: /home/humlab/notebooks
 
 # version:  '3'
 # services:
