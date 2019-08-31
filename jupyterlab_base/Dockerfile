@@ -1,7 +1,7 @@
 FROM python:3.7.3-slim
 
 # Notice: part of this code is from jupyter project
-LABEL maintainer="Humlab <support@humlab.umu.se>"
+MAINTAINER Roger Mähler <roger dot mahler at umu dot se>
 
 ARG PUSER="humlab"
 ARG PUID="1001"
